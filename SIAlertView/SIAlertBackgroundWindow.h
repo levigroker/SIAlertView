@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger, SIAlertViewBackgroundStyle) {
 @interface SIAlertBackgroundWindow : UIWindow
 
 #pragma mark - Initialization
+
 - (id)initWithFrame:(CGRect)frame andStyle:(SIAlertViewBackgroundStyle)style;
 
 @end

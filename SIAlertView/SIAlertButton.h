@@ -11,12 +11,6 @@
 @class SIAlertView;
 
 typedef NS_ENUM(NSInteger, SIAlertViewButtonType) {
-    // use images
-    SIAlertViewButtonTypeOKDefault = 0,
-    SIAlertViewButtonTypeDestructiveDefault,
-    SIAlertViewButtonTypeCancelDefault,
-    
-    // drawn with core graphics
     SIAlertViewButtonTypeOK,
     SIAlertViewButtonTypeCancel,
     SIAlertViewButtonTypePrimary,
@@ -39,6 +33,7 @@ typedef void(^SIAlertViewHandler)(SIAlertView *alertView);
 @property (nonatomic, copy) SIAlertViewHandler action;
 
 #pragma mark - Initialization
+
 + (SIAlertButton *)alertButtonWithTitle:(NSString *)aTitle
                                    type:(SIAlertViewButtonType)aType
                                  action:(SIAlertViewHandler)anAction

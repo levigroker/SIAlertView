@@ -40,17 +40,17 @@
     SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Title1" message:@"Count down"];
     
     [alertView addAlertButtonWithTitle:@"Button1"
-                                  type:SIAlertViewButtonTypeOKDefault
+                                  type:SIAlertViewButtonTypeOK
                                handler:^(SIAlertView *alertView) {
                                    NSLog(@"Button1 Clicked");
                                }];
     [alertView addAlertButtonWithTitle:@"Button2"
-                                  type:SIAlertViewButtonTypeOKDefault
+                                  type:SIAlertViewButtonTypeOK
                                handler:^(SIAlertView *alertView) {
                                    NSLog(@"Button2 Clicked");
                                }];
     [alertView addAlertButtonWithTitle:@"Button3"
-                                  type:SIAlertViewButtonTypeDestructiveDefault
+                                  type:SIAlertViewButtonTypeDanger
                                handler:^(SIAlertView *alertView) {
                                    NSLog(@"Button3 Clicked");
                                }];
@@ -143,12 +143,12 @@ id observer1,observer2,observer3,observer4;
     SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil message:@"Message3"];
     
     [alertView addAlertButtonWithTitle:@"Cancel"
-                                  type:SIAlertViewButtonTypeCancelDefault
+                                  type:SIAlertViewButtonTypeCancel
                                handler:^(SIAlertView *alertView) {
                                    NSLog(@"Cancel Clicked");
                                }];
     [alertView addAlertButtonWithTitle:@"OK"
-                                  type:SIAlertViewButtonTypeOKDefault
+                                  type:SIAlertViewButtonTypeOK
                                handler:^(SIAlertView *alertView) {
                                    NSLog(@"OK Clicked");
                                }];

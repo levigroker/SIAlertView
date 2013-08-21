@@ -63,6 +63,7 @@ static SIAlertView *__si_alert_current_view;
 @implementation SIAlertView
 
 #pragma mark - Initialization
+
 + (void)initialize
 {
     if (self != [SIAlertView class])
@@ -115,6 +116,7 @@ static SIAlertView *__si_alert_current_view;
 }
 
 #pragma mark - Class methods
+
 + (NSMutableArray *)sharedQueue
 {
     if (!__si_alert_queue) {
@@ -175,6 +177,7 @@ static SIAlertView *__si_alert_current_view;
 }
 
 #pragma mark - Setters
+
 - (void)setTitle:(NSString *)title
 {
     _title = title;
@@ -188,6 +191,7 @@ static SIAlertView *__si_alert_current_view;
 }
 
 #pragma mark - Public
+
 - (void)addAlertButtonWithTitle:(NSString *)title
                            type:(SIAlertViewButtonType)type
                         handler:(SIAlertViewHandler)handler
@@ -361,6 +365,7 @@ static SIAlertView *__si_alert_current_view;
 }
 
 #pragma mark - Transitions
+
 - (void)transitionInCompletion:(void(^)(void))completion
 {
     switch (self.transitionStyle) {
@@ -379,8 +384,8 @@ static SIAlertView *__si_alert_current_view;
                                      completion();
                                  }
                              }];
-        }
             break;
+        }
         case SIAlertViewTransitionStyleSlideFromTop:
         {
             CGRect rect = self.containerView.frame;
@@ -396,8 +401,8 @@ static SIAlertView *__si_alert_current_view;
                                      completion();
                                  }
                              }];
-        }
             break;
+        }
         case SIAlertViewTransitionStyleFade:
         {
             self.containerView.alpha = 0;
@@ -410,8 +415,8 @@ static SIAlertView *__si_alert_current_view;
                                      completion();
                                  }
                              }];
-        }
             break;
+        }
         case SIAlertViewTransitionStyleBounce:
         {
             CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
@@ -422,8 +427,8 @@ static SIAlertView *__si_alert_current_view;
             animation.delegate = self;
             [animation setValue:completion forKey:@"handler"];
             [self.containerView.layer addAnimation:animation forKey:@"bouce"];
-        }
             break;
+        }
         case SIAlertViewTransitionStyleDropDown:
         {
             CGFloat y = self.containerView.center.y;
@@ -435,8 +440,8 @@ static SIAlertView *__si_alert_current_view;
             animation.delegate = self;
             [animation setValue:completion forKey:@"handler"];
             [self.containerView.layer addAnimation:animation forKey:@"dropdown"];
-        }
             break;
+        }
         default:
             break;
     }
@@ -460,8 +465,8 @@ static SIAlertView *__si_alert_current_view;
                                      completion();
                                  }
                              }];
-        }
             break;
+        }
         case SIAlertViewTransitionStyleSlideFromTop:
         {
             CGRect rect = self.containerView.frame;
@@ -477,8 +482,8 @@ static SIAlertView *__si_alert_current_view;
                                      completion();
                                  }
                              }];
-        }
             break;
+        }
         case SIAlertViewTransitionStyleFade:
         {
             [UIView animateWithDuration:0.25
@@ -490,8 +495,8 @@ static SIAlertView *__si_alert_current_view;
                                      completion();
                                  }
                              }];
-        }
             break;
+        }
         case SIAlertViewTransitionStyleBounce:
         {
             CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
@@ -504,8 +509,8 @@ static SIAlertView *__si_alert_current_view;
             [self.containerView.layer addAnimation:animation forKey:@"bounce"];
             
             self.containerView.transform = CGAffineTransformMakeScale(0.01, 0.01);
-        }
             break;
+        }
         case SIAlertViewTransitionStyleDropDown:
         {
             CGPoint point = self.containerView.center;
@@ -523,8 +528,8 @@ static SIAlertView *__si_alert_current_view;
                                      completion();
                                  }
                              }];
-        }
             break;
+        }
         default:
             break;
     }
@@ -536,6 +541,7 @@ static SIAlertView *__si_alert_current_view;
 }
 
 #pragma mark - Layout
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -601,16 +607,6 @@ static SIAlertView *__si_alert_current_view;
                 button.frame = CGRectMake(CONTENT_PADDING_LEFT, y, self.containerView.bounds.size.width - CONTENT_PADDING_LEFT * 2, BUTTON_HEIGHT);
                 
                 if (self.buttons.count > 1) {
-                    if (i == self.buttons.count - 1) {
-                        id last = [self.buttons lastObject];
-                        
-                        if(((SIAlertButton *)last).type == SIAlertViewButtonTypeCancelDefault) {
-                            CGRect rect = button.frame;
-                            rect.origin.y += CANCEL_BUTTON_PADDING_TOP;
-                            button.frame = rect;
-                        }
-                    }
-                    
                     y += BUTTON_HEIGHT + GAP;
                 }
             }
@@ -642,14 +638,6 @@ static SIAlertView *__si_alert_current_view;
         }
         else {
             height += (BUTTON_HEIGHT + GAP) * self.buttons.count - GAP;
-            
-            if (self.buttons.count > 2) {
-                id last = [self.buttons lastObject];
-                
-                if(((SIAlertButton *)last).type == SIAlertViewButtonTypeCancelDefault) {
-                    height += CANCEL_BUTTON_PADDING_TOP;
-                }
-            }
         }
     }
     height += CONTENT_PADDING_BOTTOM;
@@ -683,14 +671,17 @@ static SIAlertView *__si_alert_current_view;
 }
 
 #pragma mark - Setup
+
 - (void)setup
 {
     [self setupContainerView];
     [self updateTitleLabel];
     [self updateMessageLabel];
     
-    for(UIButton *each in self.buttons)
+    for (UIButton *each in self.buttons)
+    {
         [self.containerView addSubview:each];
+    }
     
     [self invalidateLayout];
 }
@@ -765,18 +756,20 @@ static SIAlertView *__si_alert_current_view;
 }
 
 #pragma mark - Actions
+
 - (void)buttonPressed:(UIButton *)button
 {
 	[SIAlertView setAnimating:YES]; // set this flag to YES in order to prevent showing another alert in action block
     
     SIAlertButton *btn = (SIAlertButton *)button;
-    if(btn.action)
+    if (btn.action)
         btn.action(self);
     
 	[self dismissAnimated:YES];
 }
 
 #pragma mark - CAAnimation delegate
+
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
     void(^completion)(void) = [anim valueForKey:@"handler"];
@@ -786,6 +779,7 @@ static SIAlertView *__si_alert_current_view;
 }
 
 #pragma mark - UIAppearance setters
+
 - (void)setTitleFont:(UIFont *)titleFont
 {
     if (_titleFont == titleFont) {

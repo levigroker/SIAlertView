@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>C63ADDC0-8B92-4583-9613-AFDC718700A4</string>
+	<key>IDESourceControlProjectName</key>
+	<string>SIAlertViewExample</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7730C186-2CDE-4209-8CE4-D81B82DF0B71</key>
+		<string>ssh://github.com/levigroker/SIAlertView.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>SIAlertViewExample/SIAlertViewExample.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7730C186-2CDE-4209-8CE4-D81B82DF0B71</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/levigroker/SIAlertView.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7730C186-2CDE-4209-8CE4-D81B82DF0B71</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7730C186-2CDE-4209-8CE4-D81B82DF0B71</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SIAlertView</string>
+		</dict>
+	</array>
+</dict>
+</plist>

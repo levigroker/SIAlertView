@@ -9,15 +9,10 @@
 #import "SIAlertViewController.h"
 #import "SIAlertView.h"
 
-@interface SIAlertViewController ()
-
-@end
-
-
-
 @implementation SIAlertViewController
 
 #pragma mark - View lifecycle
+
 - (void)loadView
 {
     [super loadView];
@@ -30,13 +25,8 @@
     [self.alertView setup];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    NSLog(@"** didReceiveMemoryWarning **");
-}
-
 #pragma mark - View rotation
+
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];

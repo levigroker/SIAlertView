@@ -18,7 +18,7 @@
     CGFloat *oldComponents = (CGFloat *)CGColorGetComponents(self.CGColor);
     CGFloat newComponents[4];
     
-    if(isGreyscale) {
+    if (isGreyscale) {
         newComponents[0] = oldComponents[0] + value > 1.0 ? 1.0 : oldComponents[0] + value;
         newComponents[1] = oldComponents[0] + value > 1.0 ? 1.0 : oldComponents[0] + value;
         newComponents[2] = oldComponents[0] + value > 1.0 ? 1.0 : oldComponents[0] + value;
@@ -49,7 +49,7 @@
     CGFloat *oldComponents = (CGFloat *)CGColorGetComponents(self.CGColor);
     CGFloat newComponents[4];
     
-    if(isGreyscale) {
+    if (isGreyscale) {
         newComponents[0] = oldComponents[0] - value < 0.0 ? 0.0 : oldComponents[0] - value;
         newComponents[1] = oldComponents[0] - value < 0.0 ? 0.0 : oldComponents[0] - value;
         newComponents[2] = oldComponents[0] - value < 0.0 ? 0.0 : oldComponents[0] - value;
@@ -80,7 +80,7 @@
     CGFloat *components = (CGFloat *)CGColorGetComponents(self.CGColor);
     CGFloat sum;
     
-    if(isGreyscale) {
+    if (isGreyscale) {
         sum = components[0];
     }
     else {
