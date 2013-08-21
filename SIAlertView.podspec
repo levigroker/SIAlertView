@@ -15,5 +15,4 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '6.0'
   s.framework    = 'QuartzCore'
   s.source_files = 'SIAlertView/*.{h,m}'
-  s.resources    = 'SIAlertView/SIAlertView.bundle'
 end
