@@ -38,6 +38,7 @@
 - (IBAction)alert1:(id)sender
 {
     SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Title1" message:@"Count down"];
+    alertView.statusBarHidden = YES;
     
     [alertView addAlertButtonWithTitle:@"Button1"
                                   type:SIAlertViewButtonTypeOK
@@ -222,6 +223,11 @@ id observer1,observer2,observer3,observer4;
 }
 
 - (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+- (BOOL)prefersStatusBarHidden
 {
     return YES;
 }
