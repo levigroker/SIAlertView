@@ -261,6 +261,9 @@ static SIAlertView *__si_alert_current_view;
     
     SIAlertViewController *viewController = [[SIAlertViewController alloc] initWithNibName:nil bundle:nil];
     viewController.alertView = self;
+    #ifdef __IPHONE_7_0
+    viewController.statusBarHidden = self.statusBarHidden;
+    #endif
     
     if (!self.alertWindow) {
         UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];

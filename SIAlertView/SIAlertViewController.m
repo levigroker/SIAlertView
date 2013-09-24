@@ -25,6 +25,19 @@
     [self.alertView setup];
 }
 
+#pragma mark - Accessors
+
+#ifdef __IPHONE_7_0
+- (void)setStatusBarHidden:(BOOL)statusBarHidden
+{
+    _statusBarHidden = statusBarHidden;
+    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
+    {
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
+}
+#endif
+
 #pragma mark - View rotation
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -33,5 +46,12 @@
     [self.alertView resetTransition];
     [self.alertView invalidateLayout];
 }
+
+#ifdef __IPHONE_7_0
+- (BOOL)prefersStatusBarHidden
+{
+    return self.statusBarHidden;
+}
+#endif
 
 @end

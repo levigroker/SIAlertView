@@ -13,6 +13,9 @@
 @interface SIAlertViewController : UIViewController
 
 @property (nonatomic, strong) SIAlertView *alertView;
+#ifdef __IPHONE_7_0
+@property (nonatomic, assign) BOOL statusBarHidden;
+#endif
 
 @end
 
