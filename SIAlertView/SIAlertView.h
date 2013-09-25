@@ -7,14 +7,27 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SIAlertBackgroundWindow.h"
-#import "SIAlertButton.h"
 
 extern NSString * const SIAlertViewWillShowNotification;
 extern NSString * const SIAlertViewDidShowNotification;
 extern NSString * const SIAlertViewWillDismissNotification;
 extern NSString * const SIAlertViewDidDismissNotification;
 
+typedef NS_ENUM(NSInteger, SIAlertViewButtonType) {
+    SIAlertViewButtonTypeDefault = 0,
+    SIAlertViewButtonTypeDestructive,
+    SIAlertViewButtonTypeCancel
+};
+
+typedef NS_ENUM(NSInteger, SIAlertViewBackgroundStyle) {
+    SIAlertViewBackgroundStyleGradient = 0,
+    SIAlertViewBackgroundStyleSolid,
+};
+
+typedef NS_ENUM(NSInteger, SIAlertViewButtonsListStyle) {
+    SIAlertViewButtonsListStyleNormal = 0,
+    SIAlertViewButtonsListStyleRows
+};
 
 typedef NS_ENUM(NSInteger, SIAlertViewTransitionStyle) {
     SIAlertViewTransitionStyleSlideFromBottom = 0,
@@ -24,6 +37,8 @@ typedef NS_ENUM(NSInteger, SIAlertViewTransitionStyle) {
     SIAlertViewTransitionStyleDropDown
 };
 
+@class SIAlertView;
+typedef void(^SIAlertViewHandler)(SIAlertView *alertView);
 
 @interface SIAlertView : UIView
 
@@ -32,6 +47,7 @@ typedef NS_ENUM(NSInteger, SIAlertViewTransitionStyle) {
 
 @property (nonatomic, assign) SIAlertViewTransitionStyle transitionStyle; // default is SIAlertViewTransitionStyleSlideFromBottom
 @property (nonatomic, assign) SIAlertViewBackgroundStyle backgroundStyle; // default is SIAlertViewButtonTypeGradient
+@property (nonatomic, assign) SIAlertViewButtonsListStyle buttonsListStyle; // default is SIAlertViewButtonsListStyleNormal
 
 @property (nonatomic, copy) SIAlertViewHandler willShowHandler;
 @property (nonatomic, copy) SIAlertViewHandler didShowHandler;
@@ -57,19 +73,12 @@ typedef NS_ENUM(NSInteger, SIAlertViewTransitionStyle) {
 #endif
 
 
-- (void)setup;
-- (void)invalidateLayout;
-- (void)resetTransition;
+- (id)initWithTitle:(NSString *)title andMessage:(NSString *)message;
 
-- (id)initWithTitle:(NSString *)title message:(NSString *)message;
-
-- (void)addAlertButtonWithTitle:(NSString *)title
-                           type:(SIAlertViewButtonType)type
-                        handler:(SIAlertViewHandler)handler;
-
-- (void)addAlertButtonWithTitle:(NSString *)title
-                          color:(UIColor *)color
-                        handler:(SIAlertViewHandler)handler;
+- (void)addButtonWithTitle:(NSString *)title;
+- (void)addButtonWithTitle:(NSString *)title handler:(SIAlertViewHandler)handler;
+- (void)addButtonWithTitle:(NSString *)title type:(SIAlertViewButtonType)type handler:(SIAlertViewHandler)handler;
+- (void)addButtonWithTitle:(NSString *)title type:(SIAlertViewButtonType)type color:(UIColor *)color handler:(SIAlertViewHandler)handler;
 
 - (void)show;
 - (void)dismissAnimated:(BOOL)animated;

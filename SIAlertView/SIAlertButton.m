@@ -9,47 +9,21 @@
 #import "SIAlertButton.h"
 #import "UIColor+SIAlertView.h"
 
-@interface SIAlertButton ()
-
-@property (nonatomic, strong) UIColor *color;
-
-@end
-
-
 @implementation SIAlertButton
 
 #pragma mark - Initialization
 
-+ (SIAlertButton *)alertButtonWithTitle:(NSString *)aTitle
-                                   type:(SIAlertViewButtonType)aType
-                                 action:(SIAlertViewHandler)anAction
-                                   font:(UIFont *)aFont
-                                    tag:(NSInteger)aTag
++ (SIAlertButton *)alertButtonWithTitle:(NSString *)title color:(UIColor *)color font:(UIFont *)aFont tag:(NSInteger)tag handler:(SIAlertViewHandler)handler
 {
     SIAlertButton *button = [SIAlertButton buttonWithType:UIButtonTypeCustom];
-    button.action = anAction;
-	button.tag = aTag;
-	button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	[button setTitle:title forState:UIControlStateNormal];
+    button.color = color;
+	button.tag = tag;
+    button.handler = handler;
     button.titleLabel.font = aFont;
-	[button setTitle:aTitle forState:UIControlStateNormal];
-    button.color = [SIAlertButton colorForButtonType:aType];
-    
-    return button;
-}
 
-+ (SIAlertButton *)alertButtonWithTitle:(NSString *)aTitle
-                                  color:(UIColor *)aColor
-                                 action:(SIAlertViewHandler)anAction
-                                   font:(UIFont *)aFont
-                                    tag:(NSInteger)aTag
-{
-    SIAlertButton *button = [SIAlertButton buttonWithType:UIButtonTypeCustom];
-    button.action = anAction;
-	button.tag = aTag;
-	button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    button.titleLabel.font = aFont;
-	[button setTitle:aTitle forState:UIControlStateNormal];
-    button.color = aColor;
+    button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+
     return button;
 }
 
@@ -69,47 +43,6 @@
     }
     
     [self setNeedsDisplay];
-}
-
-#pragma mark - Utilities
-
-+ (UIColor *)colorForButtonType:(SIAlertViewButtonType)aType
-{
-    switch (aType) {
-        case SIAlertViewButtonTypePrimary:
-            return [UIColor colorWithHue:215.0f/360.0f saturation:0.82f brightness:0.84f alpha:1.0f];
-        
-        case SIAlertViewButtonTypeInfo:
-            return [UIColor colorWithHue:194.0f/360.0f saturation:0.75f brightness:0.74f alpha:1.0f];
-        
-        case SIAlertViewButtonTypeSuccess:
-            return [UIColor colorWithHue:116.0f/360.0f saturation:0.5f brightness:0.74f alpha:1.0f];
-                    
-        case SIAlertViewButtonTypeWarning:
-            return [UIColor colorWithHue:35.0f/360.0f saturation:0.90f brightness:0.96f alpha:1.0f];
-        
-        case SIAlertViewButtonTypeDanger:
-            return [UIColor colorWithHue:3.0f/360.0f saturation:0.76f brightness:0.88f alpha:1.0f];
-        
-        case SIAlertViewButtonTypeInverse:
-            return [UIColor colorWithHue:0.0f saturation:0.0f brightness:0.2f alpha:1.0f];
-        
-        case SIAlertViewButtonTypeTwitter:
-            return [UIColor colorWithHue:212.0f/360.0f saturation:0.75f brightness:1.0f alpha:1.0f];
-        
-        case SIAlertViewButtonTypeFacebook:
-            return [UIColor colorWithHue:220.0f/360.0f saturation:0.62f brightness:0.6f alpha:1.0f];
-                    
-        case SIAlertViewButtonTypePurple:
-            return [UIColor colorWithHue:260.0f/360.0f saturation:0.45f brightness:0.75f alpha:1.0f];
-        
-        case SIAlertViewButtonTypeCancel:
-            return [UIColor colorWithHue:0.0f saturation:0.0f brightness:0.7f alpha:1.0f];
-        
-        case SIAlertViewButtonTypeOK:
-        default:
-            return [UIColor colorWithHue:0.0f saturation:0.0f brightness:0.94f alpha:1.0f];
-    }
 }
 
 #pragma mark - UIButton

@@ -7,43 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class SIAlertView;
-
-typedef NS_ENUM(NSInteger, SIAlertViewButtonType) {
-    SIAlertViewButtonTypeOK,
-    SIAlertViewButtonTypeCancel,
-    SIAlertViewButtonTypePrimary,
-    SIAlertViewButtonTypeInfo,
-    SIAlertViewButtonTypeSuccess,
-    SIAlertViewButtonTypeWarning,
-    SIAlertViewButtonTypeDanger,
-    SIAlertViewButtonTypeInverse,
-    SIAlertViewButtonTypeTwitter,
-    SIAlertViewButtonTypeFacebook,
-    SIAlertViewButtonTypePurple
-};
-
-typedef void(^SIAlertViewHandler)(SIAlertView *alertView);
+#import "SIAlertView.h"
 
 @interface SIAlertButton : UIButton
 
 @property (nonatomic, copy) NSString *title;
-@property (nonatomic, assign) SIAlertViewButtonType type;
-@property (nonatomic, copy) SIAlertViewHandler action;
+@property (nonatomic, strong) UIColor *color;
+@property (nonatomic, copy) SIAlertViewHandler handler;
 
-#pragma mark - Initialization
-
-+ (SIAlertButton *)alertButtonWithTitle:(NSString *)aTitle
-                                   type:(SIAlertViewButtonType)aType
-                                 action:(SIAlertViewHandler)anAction
-                                   font:(UIFont *)aFont
-                                    tag:(NSInteger)aTag;
-
-+ (SIAlertButton *)alertButtonWithTitle:(NSString *)aTitle
-                                  color:(UIColor *)aColor
-                                 action:(SIAlertViewHandler)anAction
-                                   font:(UIFont *)aFont
-                                    tag:(NSInteger)aTag;
++ (SIAlertButton *)alertButtonWithTitle:(NSString *)title color:(UIColor *)color font:(UIFont *)aFont tag:(NSInteger)tag handler:(SIAlertViewHandler)handler;
 
 @end
