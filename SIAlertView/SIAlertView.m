@@ -1109,10 +1109,10 @@ static SIAlertView *__si_alert_current_view;
     {
         UIInterpolatingMotionEffect *effectHorizontal = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"position.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
         UIInterpolatingMotionEffect *effectVertical = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"position.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
-        [effectHorizontal setMaximumRelativeValue:@(20.0f)];
-        [effectHorizontal setMinimumRelativeValue:@(-20.0f)];
-        [effectVertical setMaximumRelativeValue:@(50.0f)];
-        [effectVertical setMinimumRelativeValue:@(-50.0f)];
+        [effectHorizontal setMaximumRelativeValue:@(10.0f)];
+        [effectHorizontal setMinimumRelativeValue:@(-10.0f)];
+        [effectVertical setMaximumRelativeValue:@(20.0f)];
+        [effectVertical setMinimumRelativeValue:@(-20.0f)];
         [self.containerView addMotionEffect:effectHorizontal];
         [self.containerView addMotionEffect:effectVertical];
     }
