@@ -56,22 +56,21 @@ typedef void(^SIAlertViewHandler)(SIAlertView *alertView);
 
 @property (nonatomic, readonly, getter = isVisible) BOOL visible;
 
-@property (nonatomic, strong) UIColor *viewBackgroundColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIColor *titleColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIColor *messageColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIFont *titleFont NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIFont *messageFont NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIFont *buttonFont NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIColor *buttonColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIColor *cancelButtonColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIColor *destructiveButtonColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) CGFloat cornerRadius NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR; // default is 2.0
-@property (nonatomic, assign) CGFloat shadowRadius NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR; // default is 8.0
+@property (nonatomic, strong) UIColor *viewBackgroundColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *titleColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *messageColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIFont *titleFont UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIFont *messageFont UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIFont *buttonFont UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *buttonColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *cancelButtonColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *destructiveButtonColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat cornerRadius UI_APPEARANCE_SELECTOR; // default is 2.0
+@property (nonatomic, assign) CGFloat shadowRadius UI_APPEARANCE_SELECTOR; // default is 8.0
 
 #ifdef __IPHONE_7_0
 @property (nonatomic, assign) BOOL statusBarHidden; //Defaults to NO
 #endif
-
 
 - (id)initWithTitle:(NSString *)title andMessage:(NSString *)message;
 
