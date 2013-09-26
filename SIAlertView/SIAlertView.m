@@ -6,15 +6,15 @@
 //  Copyright (c) 2013年 Sumi Interactive. All rights reserved.
 //
 
-#import "SIAlertView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "SIAlertView.h"
 #import "SIAlertButton.h"
+@class SIAlertBackgroundWindow;
 
 NSString * const SIAlertViewWillShowNotification = @"SIAlertViewWillShowNotification";
 NSString * const SIAlertViewDidShowNotification = @"SIAlertViewDidShowNotification";
 NSString * const SIAlertViewWillDismissNotification = @"SIAlertViewWillDismissNotification";
 NSString * const SIAlertViewDidDismissNotification = @"SIAlertViewDidDismissNotification";
-
 
 #define DEBUG_LAYOUT 0
 
@@ -29,97 +29,33 @@ NSString * const SIAlertViewDidDismissNotification = @"SIAlertViewDidDismissNoti
 #define CONTAINER_WIDTH 300
 
 const UIWindowLevel UIWindowLevelSIAlert = 1999.0;  // don't overlap system's alert
-const UIWindowLevel UIWindowLevelSIAlertBackground = 1998.0; // below the alert window
+const UIWindowLevel UIWindowLevelSIAlertBackground = 1998.0; // below the UIWindowLevelSIAlert
 
-@class SIAlertBackgroundWindow;
 
 static NSMutableArray *__si_alert_queue;
 static BOOL __si_alert_animating;
 static SIAlertBackgroundWindow *__si_alert_background_window;
 static SIAlertView *__si_alert_current_view;
 
+#pragma mark - SIAlertView Interface
+
 @interface SIAlertView ()
 
 @property (nonatomic, strong) NSMutableArray *items;
 @property (nonatomic, strong) UIWindow *oldKeyWindow;
 @property (nonatomic, strong) UIWindow *alertWindow;
-@property (nonatomic, assign, getter = isVisible) BOOL visible;
+@property (nonatomic, assign) BOOL visible;
 
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *messageLabel;
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) NSMutableArray *buttons;
 
-@property (nonatomic, assign, getter = isLayoutDirty) BOOL layoutDirty;
-
-+ (NSMutableArray *)sharedQueue;
-+ (SIAlertView *)currentAlertView;
-
-+ (BOOL)isAnimating;
-+ (void)setAnimating:(BOOL)animating;
-
-+ (void)showBackground;
-+ (void)hideBackgroundAnimated:(BOOL)animated;
+@property (nonatomic, assign) BOOL layoutDirty;
 
 - (void)setup;
 - (void)invalidateLayout;
 - (void)resetTransition;
-
-@end
-
-#pragma mark - SIBackgroundWindow
-
-@interface SIAlertBackgroundWindow : UIWindow
-
-@end
-
-@interface SIAlertBackgroundWindow ()
-
-@property (nonatomic, assign) SIAlertViewBackgroundStyle style;
-
-@end
-
-@implementation SIAlertBackgroundWindow
-
-- (id)initWithFrame:(CGRect)frame andStyle:(SIAlertViewBackgroundStyle)style
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.style = style;
-        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        self.opaque = NO;
-        self.windowLevel = UIWindowLevelSIAlertBackground;
-    }
-    return self;
-}
-
-- (void)drawRect:(CGRect)rect
-{
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    switch (self.style) {
-        case SIAlertViewBackgroundStyleGradient:
-        {
-            size_t locationsCount = 2;
-            CGFloat locations[2] = {0.0f, 1.0f};
-            CGFloat colors[8] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.75f};
-            CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-            CGGradientRef gradient = CGGradientCreateWithColorComponents(colorSpace, colors, locations, locationsCount);
-            CGColorSpaceRelease(colorSpace);
-
-            CGPoint center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
-            CGFloat radius = MIN(self.bounds.size.width, self.bounds.size.height) ;
-            CGContextDrawRadialGradient (context, gradient, center, 0, center, radius, kCGGradientDrawsAfterEndLocation);
-            CGGradientRelease(gradient);
-            break;
-        }
-        case SIAlertViewBackgroundStyleSolid:
-        {
-            [[UIColor colorWithWhite:0 alpha:0.5] set];
-            CGContextFillRect(context, self.bounds);
-            break;
-        }
-    }
-}
 
 @end
 
@@ -151,7 +87,7 @@ static SIAlertView *__si_alert_current_view;
 
 @implementation SIAlertViewController
 
-#pragma mark - View Lifecycle
+#pragma mark - Lifecycle
 
 - (void)loadView
 {
@@ -177,7 +113,7 @@ static SIAlertView *__si_alert_current_view;
 }
 #endif
 
-#pragma mark - View rotation
+#pragma mark - Rotation
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
@@ -212,7 +148,60 @@ static SIAlertView *__si_alert_current_view;
 
 @end
 
-#pragma mark - SIAlert
+#pragma mark - SIAlertBackgroundWindow
+
+@interface SIAlertBackgroundWindow : UIWindow
+
+@property (nonatomic, assign) SIAlertViewBackgroundStyle style;
+- (id)initWithFrame:(CGRect)frame andStyle:(SIAlertViewBackgroundStyle)style;
+
+@end
+
+@implementation SIAlertBackgroundWindow
+
+- (id)initWithFrame:(CGRect)frame andStyle:(SIAlertViewBackgroundStyle)style
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.style = style;
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.opaque = NO;
+        self.windowLevel = UIWindowLevelSIAlertBackground;
+    }
+    return self;
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    switch (self.style) {
+        case SIAlertViewBackgroundStyleGradient:
+        {
+            size_t locationsCount = 2;
+            CGFloat locations[2] = {0.0f, 1.0f};
+            CGFloat colors[8] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.75f};
+            CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+            CGGradientRef gradient = CGGradientCreateWithColorComponents(colorSpace, colors, locations, locationsCount);
+            CGColorSpaceRelease(colorSpace);
+            
+            CGPoint center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+            CGFloat radius = MIN(self.bounds.size.width, self.bounds.size.height) ;
+            CGContextDrawRadialGradient (context, gradient, center, 0, center, radius, kCGGradientDrawsAfterEndLocation);
+            CGGradientRelease(gradient);
+            break;
+        }
+        case SIAlertViewBackgroundStyleSolid:
+        {
+            [[UIColor colorWithWhite:0 alpha:0.5] set];
+            CGContextFillRect(context, self.bounds);
+            break;
+        }
+    }
+}
+
+@end
+
+#pragma mark - SIAlertView Implementation
 
 @implementation SIAlertView
 
@@ -228,19 +217,19 @@ static SIAlertView *__si_alert_current_view;
     appearance.titleFont = [UIFont boldSystemFontOfSize:20];
     appearance.messageFont = [UIFont systemFontOfSize:16];
     appearance.buttonFont = [UIFont systemFontOfSize:[UIFont buttonFontSize]];
-    appearance.buttonColor = [UIColor colorWithHue:0.0f saturation:0.0f brightness:0.7f alpha:1.0f];
-    appearance.cancelButtonColor = [UIColor colorWithHue:0.0f saturation:0.0f brightness:0.94f alpha:1.0f];
-    appearance.destructiveButtonColor = [UIColor colorWithHue:3.0f/360.0f saturation:0.76f brightness:0.88f alpha:1.0f];
+    appearance.buttonColor = [SIAlertButton colorForSIAlertButtonColor:SIAlertButtonColorDefault];
+    appearance.cancelButtonColor = [SIAlertButton colorForSIAlertButtonColor:SIAlertButtonColorCancel];
+    appearance.destructiveButtonColor = [SIAlertButton colorForSIAlertButtonColor:SIAlertButtonColorDanger];
     appearance.cornerRadius = 2;
     appearance.shadowRadius = 8;
 }
 
 - (id)init
 {
-	return [self initWithTitle:nil andMessage:nil];
+	return [self initWithTitle:nil message:nil];
 }
 
-- (id)initWithTitle:(NSString *)title andMessage:(NSString *)message
+- (id)initWithTitle:(NSString *)title message:(NSString *)message
 {
 	self = [super init];
 	if (self) {
@@ -285,7 +274,7 @@ static SIAlertView *__si_alert_current_view;
     __si_alert_current_view = alertView;
 }
 
-+ (BOOL)isAnimating
++ (BOOL)animating
 {
     return __si_alert_animating;
 }
@@ -376,15 +365,15 @@ static SIAlertView *__si_alert_current_view;
         [[SIAlertView sharedQueue] addObject:self];
     }
 
-    if ([SIAlertView isAnimating]) {
+    if ([SIAlertView animating]) {
         return; // wait for next turn
     }
 
-    if (self.isVisible) {
+    if (self.visible) {
         return;
     }
 
-    if ([SIAlertView currentAlertView].isVisible) {
+    if ([SIAlertView currentAlertView].visible) {
         SIAlertView *alert = [SIAlertView currentAlertView];
         [alert dismissAnimated:YES cleanup:NO];
         return;
@@ -446,9 +435,9 @@ static SIAlertView *__si_alert_current_view;
 
 - (void)dismissAnimated:(BOOL)animated cleanup:(BOOL)cleanup
 {
-    BOOL isVisible = self.isVisible;
+    BOOL visible = self.visible;
 
-    if (isVisible) {
+    if (visible) {
         if (self.willDismissHandler) {
             self.willDismissHandler(self);
         }
@@ -477,7 +466,7 @@ static SIAlertView *__si_alert_current_view;
 
         [SIAlertView setAnimating:NO];
 
-        if (isVisible) {
+        if (visible) {
             if (self.didDismissHandler) {
                 self.didDismissHandler(self);
             }
@@ -485,7 +474,7 @@ static SIAlertView *__si_alert_current_view;
         }
 
         // check if we should show next alert
-        if (!isVisible) {
+        if (!visible) {
             return;
         }
 
@@ -500,7 +489,7 @@ static SIAlertView *__si_alert_current_view;
         }
     };
 
-    if (animated && isVisible) {
+    if (animated && visible) {
         [SIAlertView setAnimating:YES];
         [self transitionOutCompletion:dismissComplete];
 
@@ -712,7 +701,7 @@ static SIAlertView *__si_alert_current_view;
 
 - (void)validateLayout
 {
-    if (!self.isLayoutDirty) {
+    if (!self.layoutDirty) {
         return;
     }
     self.layoutDirty = NO;

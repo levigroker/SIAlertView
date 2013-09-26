@@ -37,7 +37,7 @@
 
 - (IBAction)alert1:(id)sender
 {
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Title1" andMessage:@"Count down"];
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Title1" message:@"Count down"];
     alertView.statusBarHidden = YES;
 
     [alertView addButtonWithTitle:@"Button1"
@@ -100,7 +100,7 @@
 
 - (IBAction)alert2:(id)sender
 {
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Attention!" andMessage:@"This is a custom alert where the buttons are drawn via CoreGraphics. It looks really nice, huh?"];
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Attention!" message:@"This is a custom alert where the buttons are drawn via CoreGraphics. It looks really nice, huh?"];
 
     [alertView addButtonWithTitle:@"Cancel"
                              type:SIAlertViewButtonTypeDestructive
@@ -143,7 +143,7 @@ id observer1,observer2,observer3,observer4;
 
 - (IBAction)alert3:(id)sender
 {
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Message3"];
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil message:@"Message3"];
 
     [alertView addButtonWithTitle:@"Cancel" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
         NSLog(@"Cancel Clicked");

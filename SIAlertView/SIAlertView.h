@@ -54,7 +54,7 @@ typedef void(^SIAlertViewHandler)(SIAlertView *alertView);
 @property (nonatomic, copy) SIAlertViewHandler willDismissHandler;
 @property (nonatomic, copy) SIAlertViewHandler didDismissHandler;
 
-@property (nonatomic, readonly, getter = isVisible) BOOL visible;
+@property (nonatomic, readonly) BOOL visible;
 
 @property (nonatomic, strong) UIColor *viewBackgroundColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic, strong) UIColor *titleColor UI_APPEARANCE_SELECTOR;
@@ -73,7 +73,7 @@ typedef void(^SIAlertViewHandler)(SIAlertView *alertView);
 @property (nonatomic, assign) BOOL parallaxEnabled; //Defaults to YES
 #endif
 
-- (id)initWithTitle:(NSString *)title andMessage:(NSString *)message;
+- (id)initWithTitle:(NSString *)title message:(NSString *)message;
 
 - (void)addButtonWithTitle:(NSString *)title;
 - (void)addButtonWithTitle:(NSString *)title handler:(SIAlertViewHandler)handler;
