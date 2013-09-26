@@ -244,8 +244,9 @@ static SIAlertView *__si_alert_current_view;
 {
 	self = [super init];
 	if (self) {
-		_title = title;
-        _message = message;
+		self.title = title;
+        self.message = message;
+        self.parallaxEnabled = YES;
 		self.items = [[NSMutableArray alloc] init];
         //Initalize to our appearance defaults (iOS 7 doesn't yet handle appearance fully)
         SIAlertView *appearance = [SIAlertView appearance];
@@ -325,7 +326,7 @@ static SIAlertView *__si_alert_current_view;
                      }];
 }
 
-#pragma mark - Setters
+#pragma mark - Accessors
 
 - (void)setTitle:(NSString *)title
 {
@@ -425,6 +426,9 @@ static SIAlertView *__si_alert_current_view;
             self.didShowHandler(self);
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:SIAlertViewDidShowNotification object:self userInfo:nil];
+        #ifdef __IPHONE_7_0
+        [self addParallaxEffect];
+        #endif
 
         [SIAlertView setAnimating:NO];
 
@@ -449,6 +453,9 @@ static SIAlertView *__si_alert_current_view;
             self.willDismissHandler(self);
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:SIAlertViewWillDismissNotification object:self userInfo:nil];
+        #ifdef __IPHONE_7_0
+                [self removeParallaxEffect];
+        #endif
     }
 
     void (^dismissComplete)(void) = ^{
@@ -1091,5 +1098,35 @@ static SIAlertView *__si_alert_current_view;
         }
     }
 }
+
+#ifdef __IPHONE_7_0
+
+#pragma mark - Parallax effect
+
+- (void)addParallaxEffect
+{
+    if (self.parallaxEnabled && NSClassFromString(@"UIInterpolatingMotionEffect"))
+    {
+        UIInterpolatingMotionEffect *effectHorizontal = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"position.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+        UIInterpolatingMotionEffect *effectVertical = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"position.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+        [effectHorizontal setMaximumRelativeValue:@(20.0f)];
+        [effectHorizontal setMinimumRelativeValue:@(-20.0f)];
+        [effectVertical setMaximumRelativeValue:@(50.0f)];
+        [effectVertical setMinimumRelativeValue:@(-50.0f)];
+        [self.containerView addMotionEffect:effectHorizontal];
+        [self.containerView addMotionEffect:effectVertical];
+    }
+}
+
+- (void)removeParallaxEffect
+{
+    if (self.parallaxEnabled && NSClassFromString(@"UIInterpolatingMotionEffect"))
+    {
+        [self.containerView.motionEffects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            [self.containerView removeMotionEffect:obj];
+        }];
+    }
+}
+#endif
 
 @end

@@ -70,6 +70,7 @@ typedef void(^SIAlertViewHandler)(SIAlertView *alertView);
 
 #ifdef __IPHONE_7_0
 @property (nonatomic, assign) BOOL statusBarHidden; //Defaults to NO
+@property (nonatomic, assign) BOOL parallaxEnabled; //Defaults to YES
 #endif
 
 - (id)initWithTitle:(NSString *)title andMessage:(NSString *)message;
