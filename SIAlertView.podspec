@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.homepage = 'https://github.com/levigroker/SIAlertView'
   s.author   = { 'Levi Brown' => 'levigroker@gmail.com' }
   s.source   = { :git => 'https://github.com/levigroker/SIAlertView.git',
-                 :commit => '5fe167c92660af5bcdd5b1ca7069e72a42030b4c' }
+                 :commit => '6c09d990bdd30ca17941851a14dc56ecb6ac3477' }
   s.description = 'An UIAlertView replacement with block syntax and fancy transition styles.'
   s.requires_arc = true
   s.ios.deployment_target = '6.0'
