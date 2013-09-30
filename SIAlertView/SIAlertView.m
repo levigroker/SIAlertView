@@ -117,6 +117,33 @@ static SIAlertView *__si_alert_current_view;
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    static Float32 angle = 90.0f * M_PI / 180.0f;
+    Float32 rotationAngle = 0.0f;
+    
+    switch (toInterfaceOrientation) {
+        case UIInterfaceOrientationLandscapeLeft:
+            rotationAngle = -angle;
+            break;
+        case UIInterfaceOrientationLandscapeRight:
+            rotationAngle = angle;
+            break;
+        default:
+            break;
+    }
+    
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    
+    //Handle the rotation
+    if (rotationAngle != 0 || !CGAffineTransformIsIdentity(self.view.transform))
+    {
+        transform = CGAffineTransformMakeRotation(rotationAngle);
+    }
+    
+    [UIView animateWithDuration:duration animations:^{
+        self.view.transform = transform;
+    }];
+
+    [UIView setAnimationsEnabled:NO];
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     [self.alertView resetTransition];
     [self.alertView invalidateLayout];
@@ -127,14 +154,15 @@ static SIAlertView *__si_alert_current_view;
     return UIInterfaceOrientationMaskAll;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+- (BOOL)shouldAutorotate
 {
     return YES;
 }
 
-- (BOOL)shouldAutorotate
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    return YES;
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [UIView setAnimationsEnabled:YES];
 }
 
 #pragma mark - Status Bar Handling
